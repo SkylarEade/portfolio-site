@@ -16,7 +16,7 @@ export default function Nav() {
       <a
         href="/"
         style={{
-          fontFamily: "'DM Mono', monospace",
+          fontFamily: "var(--font-dm-mono), monospace",
           fontSize: 15,
           fontWeight: 500,
           color: "#1a1a1a",

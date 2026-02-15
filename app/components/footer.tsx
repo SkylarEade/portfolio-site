@@ -16,7 +16,7 @@ export default function Footer() {
     >
       <span
         style={{
-          fontFamily: "'DM Mono', monospace",
+          fontFamily: "var(--font-dm-mono), monospace",
           fontSize: 12,
           color: "#737373",
         }}

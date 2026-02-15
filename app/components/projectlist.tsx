@@ -70,7 +70,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           >
             <span
               style={{
-                fontFamily: "'DM Mono', monospace",
+                fontFamily: "var(--font-dm-mono), monospace",
                 fontSize: 13,
                 color: "#737373",
               }}
@@ -106,7 +106,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               <span
                 key={tag}
                 style={{
-                  fontFamily: "'DM Mono', monospace",
+                  fontFamily: "var(--font-dm-mono), monospace",
                   fontSize: 12,
                   color: "#737373",
                   background: "#f0f0ee",
@@ -130,7 +130,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         >
           <span
             style={{
-              fontFamily: "'DM Mono', monospace",
+              fontFamily: "var(--font-dm-mono), monospace",
               fontSize: 12,
               color: statusColor,
               display: "flex",

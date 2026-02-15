@@ -1,10 +1,7 @@
-// app/page.tsx
-// This is a Next.js App Router server component that reads projects from local JSON
-
-import ProjectList from "./components/projectlist";
-import Nav from "./components/nav";
-import Hero from "./components/hero";
-import Footer from "./components/footer";
+// app/projects/page.tsx
+import ProjectList from "../components/projectlist";
+import Nav from "../components/nav";
+import Footer from "../components/footer";
 import fs from "fs";
 import path from "path";
 
@@ -20,7 +17,7 @@ async function getProjects() {
   }
 }
 
-export default async function Home() {
+export default async function ProjectsPage() {
   const projects = await getProjects();
 
   return (
@@ -34,13 +31,6 @@ export default async function Home() {
       }}
     >
       <Nav />
-      <Hero />
-
-      {/* Divider */}
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ borderTop: "1px solid #e5e5e5" }} />
-      </div>
-
       <ProjectList projects={projects} />
       <Footer />
     </div>
