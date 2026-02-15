@@ -1,57 +1,50 @@
-"use client";
+// app/page.tsx
+// This is a Next.js App Router server component that fetches projects from S3
 
-import { useState, useEffect } from "react";
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-import "./../app/app.css";
-import { Amplify } from "aws-amplify";
-import outputs from "@/amplify_outputs.json";
-import "@aws-amplify/ui-react/styles.css";
+import ProjectList from "./components/ProjectList";
+import Nav from "./components/Nav";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
 
-Amplify.configure(outputs);
+// Replace this with your actual S3 bucket URL after setup
+const PROJECTS_URL =
+  "https://YOUR-BUCKET-NAME.s3.YOUR-REGION.amazonaws.com/projects.json";
 
-const client = generateClient<Schema>();
-
-export default function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  function listTodos() {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+async function getProjects() {
+  try {
+    const res = await fetch(PROJECTS_URL, {
+      next: { revalidate: 60 }, // re-fetch every 60 seconds (ISR)
     });
+    if (!res.ok) throw new Error("Failed to fetch projects");
+    const data = await res.json();
+    return data.projects;
+  } catch (error) {
+    console.error("Error loading projects:", error);
+    return [];
   }
+}
 
-  useEffect(() => {
-    listTodos();
-  }, []);
-
-  function createTodo() {
-    client.models.Todo.create({
-      content: window.prompt("Todo content"),
-    });
-  }
-    
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
-  }
+export default async function Home() {
+  const projects = await getProjects();
 
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li onClick={() => deleteTodo(todo.id)} 
-          key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/">
-          Review next steps of this tutorial.
-        </a>
+    <div
+      style={{
+        background: "#fafaf9",
+        minHeight: "100vh",
+        color: "#1a1a1a",
+      }}
+    >
+      <Nav />
+      <Hero />
+
+      {/* Divider */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ borderTop: "1px solid #e5e5e5" }} />
       </div>
-    </main>
+
+      <ProjectList projects={projects} />
+      <Footer />
+    </div>
   );
 }
