@@ -21,13 +21,13 @@ export default function Footer() {
           color: "#737373",
         }}
       >
-        © 2025 Skylar Eade
+        © 2026 Skylar Eade
       </span>
       <div style={{ display: "flex", gap: 20 }}>
         {[
           { label: "GitHub", href: "https://github.com/skylareade" },
           { label: "LinkedIn", href: "https://linkedin.com/in/skylareade" },
-          { label: "Email", href: "mailto:skylar@skylareade.com" },
+          { label: "Email", href: "mailto:skylareade01@gmail.com" },
         ].map((link) => (
           <a
             key={link.label}

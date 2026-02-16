@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { digitPredictFunction } from "../functions/digit-predict/resource";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -11,6 +12,14 @@ const schema = a.schema({
     .model({
       content: a.string(),
     })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  /** Digit prediction from your AI Basics model (Python Lambda). Pass pixelsJson: JSON.stringify(pixels) */
+  predictDigit: a
+    .query()
+    .arguments({ pixelsJson: a.string() })
+    .returns(a.string())
+    .handler(a.handler.function(digitPredictFunction))
     .authorization((allow) => [allow.publicApiKey()]),
 });
 
